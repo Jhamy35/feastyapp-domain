@@ -1,24 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmation FeastyApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 20px 0;
+            font-size: 24px;
+        }
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🍽️</div>
+        <h1>Compte confirmé !</h1>
+        <p>Votre compte FeastyApp a été confirmé avec succès.</p>
+        <div class="spinner"></div>
+        <p>Redirection vers l'application...</p>
+    </div>
+
     <script>
-        // Redirection automatique vers la page principale avec le token
+        // Récupérer les paramètres de l'URL
         const urlParams = new URLSearchParams(window.location.search);
         const tokenHash = urlParams.get('token_hash');
         const type = urlParams.get('type');
         
-        if (tokenHash && type) {
-            // Rediriger vers la page principale avec les paramètres
-            window.location.href = `/feastyapp-domain/?token_hash=${tokenHash}&type=${type}`;
-        } else {
-            // Redirection simple vers la page principale
-            window.location.href = '/feastyapp-domain/';
-        }
+        // Traitement de la confirmation
+        setTimeout(() => {
+            // Message de succès
+            document.querySelector('h1').textContent = '✅ Confirmation réussie !';
+            document.querySelector('p').textContent = 'Retournez à l\'application FeastyApp pour vous connecter.';
+            document.querySelector('.spinner').style.display = 'none';
+            
+            // Instructions pour l'utilisateur
+            const instructions = document.createElement('p');
+            instructions.innerHTML = '<strong>➡️ Retournez à votre application mobile FeastyApp et connectez-vous avec vos identifiants.</strong>';
+            instructions.style.marginTop = '30px';
+            instructions.style.fontSize = '18px';
+            instructions.style.background = 'rgba(255, 255, 255, 0.2)';
+            instructions.style.padding = '15px';
+            instructions.style.borderRadius = '10px';
+            document.querySelector('.container').appendChild(instructions);
+        }, 2000);
     </script>
-</head>
-<body>
-    <p>Redirection en cours...</p>
 </body>
 </html>
