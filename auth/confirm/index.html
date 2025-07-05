@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation FeastyApp</title>
+    <script>
+        // Redirection automatique vers la page principale avec le token
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenHash = urlParams.get('token_hash');
+        const type = urlParams.get('type');
+        
+        if (tokenHash && type) {
+            // Rediriger vers la page principale avec les paramètres
+            window.location.href = `/feastyapp-domain/?token_hash=${tokenHash}&type=${type}`;
+        } else {
+            // Redirection simple vers la page principale
+            window.location.href = '/feastyapp-domain/';
+        }
+    </script>
+</head>
+<body>
+    <p>Redirection en cours...</p>
+</body>
+</html>
