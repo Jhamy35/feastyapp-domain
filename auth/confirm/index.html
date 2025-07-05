@@ -21,6 +21,7 @@
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             backdrop-filter: blur(10px);
+            max-width: 500px;
         }
         .logo {
             font-size: 48px;
@@ -44,44 +45,93 @@
             animation: spin 1s linear infinite;
             margin: 20px auto;
         }
+        .success {
+            background: rgba(0, 255, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .error {
+            background: rgba(255, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="container">
         <div class="logo">🍽️</div>
-        <h1>Compte confirmé !</h1>
-        <p>Votre compte FeastyApp a été confirmé avec succès.</p>
+        <h1>Confirmation en cours...</h1>
         <div class="spinner"></div>
-        <p>Redirection vers l'application...</p>
+        <p id="status">Traitement de la confirmation...</p>
     </div>
 
     <script>
-        // Récupérer les paramètres de l'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const tokenHash = urlParams.get('token_hash');
-        const type = urlParams.get('type');
+        const { createClient } = supabase;
         
-        // Traitement de la confirmation
-        setTimeout(() => {
-            // Message de succès
-            document.querySelector('h1').textContent = '✅ Confirmation réussie !';
-            document.querySelector('p').textContent = 'Retournez à l\'application FeastyApp pour vous connecter.';
-            document.querySelector('.spinner').style.display = 'none';
-            
-            // Instructions pour l'utilisateur
-            const instructions = document.createElement('p');
-            instructions.innerHTML = '<strong>➡️ Retournez à votre application mobile FeastyApp et connectez-vous avec vos identifiants.</strong>';
-            instructions.style.marginTop = '30px';
-            instructions.style.fontSize = '18px';
-            instructions.style.background = 'rgba(255, 255, 255, 0.2)';
-            instructions.style.padding = '15px';
-            instructions.style.borderRadius = '10px';
-            document.querySelector('.container').appendChild(instructions);
-        }, 2000);
+        // Configuration Supabase (vos vraies données)
+        const supabaseUrl = 'https://alonwitrzjcxejnqiblr.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFsb253aXRyempjeGVqbnFpYmxyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU2NTQ5ODAsImV4cCI6MjA1MTIzMDk4MH0.cZXZYgcx_VJPVSyIEjJ4jvXRJhJ1rH5YwFBZL3Y6Xvs';
+        
+        const supabaseClient = createClient(supabaseUrl, supabaseKey);
+        
+        async function confirmEmail() {
+            try {
+                // Récupérer les paramètres de l'URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const tokenHash = urlParams.get('token_hash');
+                const type = urlParams.get('type');
+                
+                document.getElementById('status').textContent = 'Vérification du token...';
+                
+                if (!tokenHash || !type) {
+                    throw new Error('Paramètres de confirmation manquants');
+                }
+                
+                // Confirmer l'email avec Supabase
+                const { data, error } = await supabaseClient.auth.verifyOtp({
+                    token_hash: tokenHash,
+                    type: type === 'signup' ? 'signup' : 'email'
+                });
+                
+                if (error) {
+                    throw error;
+                }
+                
+                // Succès
+                document.querySelector('.spinner').style.display = 'none';
+                document.querySelector('h1').innerHTML = '✅ Confirmation réussie !';
+                document.getElementById('status').innerHTML = `
+                    <div class="success">
+                        <strong>🎉 Votre compte FeastyApp a été confirmé avec succès !</strong><br>
+                        <br>
+                        ➡️ <strong>Retournez à votre application mobile FeastyApp et connectez-vous avec vos identifiants.</strong>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Erreur confirmation:', error);
+                document.querySelector('.spinner').style.display = 'none';
+                document.querySelector('h1').innerHTML = '❌ Erreur de confirmation';
+                document.getElementById('status').innerHTML = `
+                    <div class="error">
+                        <strong>Problème lors de la confirmation :</strong><br>
+                        ${error.message}<br>
+                        <br>
+                        💡 Essayez de créer un nouveau compte ou contactez le support.
+                    </div>
+                `;
+            }
+        }
+        
+        // Lancer la confirmation au chargement de la page
+        confirmEmail();
     </script>
 </body>
 </html>
