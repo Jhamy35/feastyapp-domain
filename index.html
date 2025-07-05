@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeastyApp - Authentification</title>
+    <meta http-equiv="refresh" content="2; url=https://jhamy35.wixsite.com/studiojhamy/feastyapp">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 400px;
+            margin: 20px;
+        }
+        .logo {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #FF6B35;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #FF6B35;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        p {
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+        .link {
+            color: #FF6B35;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🍽️</div>
+        <h1>FeastyApp</h1>
+        <div class="loader"></div>
+        <p><strong>Redirection en cours...</strong></p>
+        <p>Vous allez être redirigé vers votre espace FeastyApp.</p>
+        <p>
+            <a href="https://jhamy35.wixsite.com/studiojhamy/feastyapp" class="link">
+                Cliquer ici si la redirection ne fonctionne pas
+            </a>
+        </p>
+        <p class="subtitle">
+            Configuration des liens profonds Android<br>
+            Studio Jhamy © 2025
+        </p>
+    </div>
+    
+    <script>
+        // Redirection de sécurité après 3 secondes
+        setTimeout(function() {
+            window.location.href = 'https://jhamy35.wixsite.com/studiojhamy/feastyapp';
+        }, 3000);
+    </script>
+</body>
+</html>
