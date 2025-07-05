@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FeastyApp - Authentification</title>
-    <meta http-equiv="refresh" content="2; url=https://jhamy35.wixsite.com/studiojhamy/feastyapp">
+    <meta http-equiv="refresh" content="2; url=https://jhamy35.wixsite.com/studiojhamy">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -65,6 +65,14 @@
             font-size: 14px;
             margin-top: 30px;
         }
+        .success {
+            background: #e8f5e8;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 15px 0;
+            color: #2E7D32;
+        }
     </style>
 </head>
 <body>
@@ -72,10 +80,14 @@
         <div class="logo">🍽️</div>
         <h1>FeastyApp</h1>
         <div class="loader"></div>
+        <div class="success">
+            ✅ Authentification réussie !<br>
+            Retour vers l'application...
+        </div>
         <p><strong>Redirection en cours...</strong></p>
-        <p>Vous allez être redirigé vers votre espace FeastyApp.</p>
+        <p>Vous allez être redirigé vers Studio Jhamy.</p>
         <p>
-            <a href="https://jhamy35.wixsite.com/studiojhamy/feastyapp" class="link">
+            <a href="https://jhamy35.wixsite.com/studiojhamy" class="link">
                 Cliquer ici si la redirection ne fonctionne pas
             </a>
         </p>
@@ -86,10 +98,20 @@
     </div>
     
     <script>
-        // Redirection de sécurité après 3 secondes
+        // ✅ REDIRECTION UNIFIÉE VERS HOME
         setTimeout(function() {
-            window.location.href = 'https://jhamy35.wixsite.com/studiojhamy/feastyapp';
+            window.location.href = 'https://jhamy35.wixsite.com/studiojhamy';
         }, 3000);
+        
+        // ✅ TENTATIVE RETOUR APP (optionnel)
+        setTimeout(function() {
+            try {
+                // Essayer d'ouvrir l'app directement
+                window.location.href = 'feastyapp://auth/confirmed';
+            } catch (e) {
+                console.log('App link not available');
+            }
+        }, 5000);
     </script>
 </body>
 </html>
